@@ -10,12 +10,12 @@ import static org.mockito.Mockito.mock;
 
 public class JdbcContextTest {
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
 
     }
 
     @Test
-    public void executeSql() throws Exception {
+    public void executeSql() {
         //DataSourceImplOnlyConnection dataSource = new DataSourceImplOnlyConnection();
         //dataSource.setConnection();
 

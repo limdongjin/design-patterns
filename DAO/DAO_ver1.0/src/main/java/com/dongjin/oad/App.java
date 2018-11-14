@@ -12,19 +12,49 @@ import java.sql.SQLException;
 import java.util.stream.Stream;
 
 public class App {
-    public static void main(String[] args) throws Exception {
-        DataSourceImplOnlyConnection dataSource = new DataSourceImplOnlyConnection();
-        Stream<Product> productsStream;
-
+    public static void main(String[] args) {
         String url = "jdbc:mysql://localhost:3306/dongjin?autoReconnect=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC";
         String id = "root";
         String pw = "password1";
+        ProductDao productDao;
+        try {
+            productDao = new ProductDaoImpl(new JdbcContext(new DataSourceImplOnlyConnection(url, id, pw)));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return;
+        }
 
-        dataSource.setConnection(url, id, pw);
+        try {
+            productDao.findAll().forEach(product -> System.out.println(product));
+            System.out.println("\n\n\n");
+            Product product = new Product(11, "hello world", "desc", 12113);
 
-        ProductDao productDao = new ProductDaoImpl(new JdbcContext(dataSource));
-        productsStream = productDao.findAll();
+            productDao.create(product);
+            System.out.println(productDao.findById(11));
+            System.out.println("\n\n\n");
 
-        productsStream.forEach(product -> System.out.println(product.toString()));
+            productDao.delete(product);
+            System.out.println(productDao.findById(11));
+            System.out.println("\n\n\n");
+
+            productDao.create(product);
+            System.out.println(productDao.findById(121));
+            product.setId(121);
+            productDao.create(product);
+            System.out.println(productDao.findById(121));
+            System.out.println("\n\n\n");
+
+            product = productDao.findById(121).get();
+            product.setName("World Hello!! !!!");
+            productDao.update(product);
+
+            System.out.println(productDao.findById(121));
+
+            productDao.findAll().forEach(product1 -> System.out.println(product1));
+        } catch (SQLException | IllegalAccessException e) {
+            e.printStackTrace();
+            return;
+        }
+
     }
 }

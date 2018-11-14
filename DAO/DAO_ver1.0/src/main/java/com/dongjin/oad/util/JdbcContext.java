@@ -14,10 +14,6 @@ public class JdbcContext {
         this.dataSource = dataSource;
     }
 
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
     /**
      * @return connection
      * @throws SQLException
@@ -26,15 +22,23 @@ public class JdbcContext {
         return dataSource.getConnection();
     }
 
-
     /**
      * @param query ( ex, "select * from products" )
      * @param action for manipulate resultSet
      * @return ArrayList
      * @throws Exception
      */
-    public ArrayList executeSql(final String query, Action action) throws Exception{
+    public ArrayList executeSql(final String query, Action action) throws SQLException, IllegalAccessException {
         return processStatement(connection -> connection.prepareStatement(query), action);
+    }
+
+    /**
+     * @param query
+     * @return
+     * @throws SQLException
+     */
+    public boolean executeSql(final String query) throws SQLException{
+        return processStatement(connection -> connection.prepareStatement(query));
     }
 
     /**
@@ -42,13 +46,14 @@ public class JdbcContext {
      * @return result
      * @throws SQLException
      */
-    private ArrayList processStatement(StatementStrategy statementStrategy, Action action) throws Exception {
+    private ArrayList processStatement(StatementStrategy statementStrategy, Action action) throws SQLException, IllegalAccessException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
         try {
             connection = getConnection();
+
             preparedStatement = statementStrategy.makeStatement(connection);
             resultSet = preparedStatement.executeQuery();
             return action.run(resultSet);
@@ -60,5 +65,32 @@ public class JdbcContext {
         }
     }
 
+    /**
+     * @param statementStrategy
+     * @return
+     * @throws SQLException
+     */
+    private boolean processStatement(StatementStrategy statementStrategy) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int result;
+        try {
+            connection = getConnection();
+
+            preparedStatement = statementStrategy.makeStatement(connection);
+            result = preparedStatement.executeUpdate();
+            if(result != 0){
+                return true;
+            }else{
+                return false;
+            }
+        }catch (SQLException e){
+            throw e;
+        }finally {
+            if(preparedStatement != null) {  try{ preparedStatement.close(); }catch (SQLException e) {} }
+            if(connection != null) {  try{ connection.close(); }catch (SQLException e) {} }
+        }
+    }
 
 }

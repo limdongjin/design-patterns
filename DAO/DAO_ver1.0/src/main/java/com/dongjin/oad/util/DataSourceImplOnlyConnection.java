@@ -18,6 +18,22 @@ public class DataSourceImplOnlyConnection implements DataSource {
      *                             current database connection attempt
      */
     private Connection connection;
+    private String url;
+    private String id;
+    private String pw;
+
+    public DataSourceImplOnlyConnection(String url, String id, String pw) throws SQLException{
+        this.url = url;
+        this.id = id;
+        this.pw = pw;
+
+        try {
+            connection = DriverManager.getConnection(url, id, pw);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw e;
+        }
+    }
 
     public void setConnection(String url, String id, String pw) throws SQLException {
         try {
@@ -28,8 +44,16 @@ public class DataSourceImplOnlyConnection implements DataSource {
         }
     }
 
+    protected void setConnection() throws SQLException {
+       setConnection(this.url, this.id, this.pw);
+    }
+
     @Override
     public Connection getConnection() throws SQLException {
+        if(connection.isClosed()){
+            // re connect
+            setConnection();
+        }
         return connection;
     }
 
