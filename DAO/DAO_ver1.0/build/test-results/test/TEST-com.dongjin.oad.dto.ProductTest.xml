@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dongjin.oad.dto.ProductTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2018-11-14T19:51:23" hostname="imdongjin-ui-MacBook-Pro.local" time="0.02">
+  <properties/>
+  <testcase name="equals" classname="com.dongjin.oad.dto.ProductTest" time="0.001"/>
+  <testcase name="getAttributesToString" classname="com.dongjin.oad.dto.ProductTest" time="0.005"/>
+  <testcase name="getAttributesValueToString" classname="com.dongjin.oad.dto.ProductTest" time="0.002"/>
+  <testcase name="getName" classname="com.dongjin.oad.dto.ProductTest" time="0.001"/>
+  <testcase name="getId" classname="com.dongjin.oad.dto.ProductTest" time="0.0"/>
+  <testcase name="getAttributes" classname="com.dongjin.oad.dto.ProductTest" time="0.004"/>
+  <testcase name="setId" classname="com.dongjin.oad.dto.ProductTest" time="0.001"/>
+  <testcase name="setDescription" classname="com.dongjin.oad.dto.ProductTest" time="0.001"/>
+  <testcase name="setPrice" classname="com.dongjin.oad.dto.ProductTest" time="0.0"/>
+  <testcase name="getDescription" classname="com.dongjin.oad.dto.ProductTest" time="0.0"/>
+  <testcase name="getPrice" classname="com.dongjin.oad.dto.ProductTest" time="0.0"/>
+  <testcase name="setName" classname="com.dongjin.oad.dto.ProductTest" time="0.0"/>
+  <system-out><![CDATA[id,name,description,price
+1,"제품1","설명!!",10000
+{price={type=int, value=10000}, name={type=java.lang.String, value=제품1}, description={type=java.lang.String, value=설명!!}, id={type=int, value=1}}
+[price, name, description, id]
+price
+{type=int, value=10000}
+name
+{type=java.lang.String, value=제품1}
+description
+{type=java.lang.String, value=설명!!}
+id
+{type=int, value=1}
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

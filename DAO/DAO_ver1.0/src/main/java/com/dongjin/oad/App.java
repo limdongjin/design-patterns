@@ -17,6 +17,7 @@ public class App {
         String id = "root";
         String pw = "password1";
         ProductDao productDao;
+
         try {
             productDao = new ProductDaoImpl(new JdbcContext(new DataSourceImplOnlyConnection(url, id, pw)));
         } catch (SQLException e) {

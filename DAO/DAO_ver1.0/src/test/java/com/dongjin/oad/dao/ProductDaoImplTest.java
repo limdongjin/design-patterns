@@ -3,9 +3,13 @@ package com.dongjin.oad.dao;
 import com.dongjin.oad.dto.Product;
 import com.dongjin.oad.util.DataSourceImplOnlyConnection;
 import com.dongjin.oad.util.JdbcContext;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -16,19 +20,33 @@ import static org.junit.Assert.*;
 public class ProductDaoImplTest {
 
     private ProductDao productDao;
+    private String  id;
+    private String pw;
+    private String url;
 
     private void setProductDao() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/dongjin?autoReconnect=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC";
-        String id = "root";
-        String pw = "password1";
+        url = "jdbc:sqlite:test.db";
 
-        productDao = new ProductDaoImpl(new JdbcContext(new DataSourceImplOnlyConnection(url, id, pw)));
+        productDao = new ProductDaoImpl(new JdbcContext(new DataSourceImplOnlyConnection(url)));
     }
 
     @Before
     public void setUp() throws Exception {
         setProductDao();
+
+        new JdbcContext(new DataSourceImplOnlyConnection(url)).executeSql(
+                "create table products ( id INTEGER not Null, name VARCHAR(255), description VARCHAR(255), price INTEGER )"
+       );
     }
+
+    @After
+    public void tearDown() throws Exception {
+        new JdbcContext(new DataSourceImplOnlyConnection(url)).executeSql(
+                "drop table products"
+        );
+    }
+
+
 
     @Test
     public void findAll() throws SQLException, IllegalAccessException {

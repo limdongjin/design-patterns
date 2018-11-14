@@ -27,13 +27,17 @@ public class DataSourceImplOnlyConnection implements DataSource {
         this.id = id;
         this.pw = pw;
 
-        try {
-            connection = DriverManager.getConnection(url, id, pw);
-        }catch (Exception e){
-            e.printStackTrace();
-            throw e;
-        }
+        setConnection(url, id, pw);
     }
+
+    public DataSourceImplOnlyConnection(String url) throws SQLException {
+        this.url = url;
+        this.id = null;
+        this.pw = null;
+
+        setConnection(url);
+    }
+
 
     public void setConnection(String url, String id, String pw) throws SQLException {
         try {
@@ -44,8 +48,22 @@ public class DataSourceImplOnlyConnection implements DataSource {
         }
     }
 
-    protected void setConnection() throws SQLException {
-       setConnection(this.url, this.id, this.pw);
+    public void setConnection() throws SQLException {
+        // re connection
+        if(this.id == null){
+            setConnection(this.url);
+        }else{
+            setConnection(this.url, this.id, this.pw);
+        }
+    }
+
+    public void setConnection(String url) throws SQLException {
+        try {
+            connection = DriverManager.getConnection(url);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @Override

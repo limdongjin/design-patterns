@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.joining;
 @ToString
 @EqualsAndHashCode
 public class Product {
-    @NonNull private int id;
+    private int id;
     private String name;
     private String description;
     private int price;
