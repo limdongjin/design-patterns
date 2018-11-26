@@ -1,0 +1,12 @@
+id,name,description,price
+1,"제품1","설명!!",10000
+�{price={type=int, value=10000}, name={type=java.lang.String, value=제품1}, description={type=java.lang.String, value=설명!!}, id={type=int, value=1}}
+[price, name, description, id]
+price
+{type=int, value=10000}
+name
+'{type=java.lang.String, value=제품1}
+description
+({type=java.lang.String, value=설명!!}
+id
+{type=int, value=1}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dongjin.oad.util.JdbcContextTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-11-14T19:51:23" hostname="imdongjin-ui-MacBook-Pro.local" time="0.001">
+  <properties/>
+  <testcase name="executeSql" classname="com.dongjin.oad.util.JdbcContextTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
